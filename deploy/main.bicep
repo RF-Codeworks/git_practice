@@ -8,3 +8,14 @@ param location string = resourceGroup().location
 ])
 param environmentType string
 
+@description('THe name of the App Service app. This name must be globally unique.')
+param appServiceAppName string = 'toyweb-${uniqueString(resourceGroup().id)}'
+
+module appService '../modules/app-service.bicep' = {
+  name: 'app-service'
+  params: {
+    location: location
+    environmentType: environmentType
+    appServiceAppName: appServiceAppName
+  }
+}
